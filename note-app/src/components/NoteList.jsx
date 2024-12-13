@@ -1,11 +1,16 @@
 import React from 'react';
 import NoteCard from './NoteCard';
 
-const NoteList = ({ notes, deleteNote }) => {
+const NoteList = ({ notes, deleteNote, editNote }) => {
   return (
-    <div>
-      {notes.map((note, index) => (
-        <NoteCard key={index} note={note} index={index} onDelete={deleteNote} />
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+      {notes.map((note) => (
+        <NoteCard
+          key={note.id}
+          note={note}
+          deleteNote={deleteNote}
+          editNote={editNote}
+        />
       ))}
     </div>
   );
