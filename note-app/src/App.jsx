@@ -14,11 +14,11 @@ function App() {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
-  const addNote = (noteText) => {
+  const addNote = (noteText, tags) => {
     if (!noteText.trim()) return;
-    setNotes([...notes, { text: noteText.trim(), id: Date.now() }]);
+    setNotes([...notes, { text: noteText.trim(), id: Date.now(), tags: tags.split(',').map(tag => tag.trim()) }]);
   };
-
+  
   const deleteNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
   };
@@ -33,9 +33,12 @@ function App() {
     setSearchQuery(e.target.value);
   };
 
-  const filteredNotes = notes.filter((note) =>
-    note.text.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredNotes = notes.filter((note) => {
+    const textMatch = note.text.toLowerCase().includes(searchQuery.toLowerCase());
+    const tagsMatch = note.tags && Array.isArray(note.tags) && note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    return textMatch || tagsMatch;
+  });
+  
 
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
