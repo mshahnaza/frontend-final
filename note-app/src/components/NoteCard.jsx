@@ -62,7 +62,6 @@ const NoteCard = ({ note, deleteNote, editNote }) => {
             {note.text}
           </p>
   
-          {/* Отображение тегов */}
           <div style={{ marginTop: '10px' }}>
             {note.tags && note.tags.map((tag, index) => (
               <span
